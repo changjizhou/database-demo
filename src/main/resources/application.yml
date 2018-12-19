@@ -1,0 +1,63 @@
+logging:
+  level:
+    cn.ktwo.databasereadwritedemo.mapper: debug
+
+spring:
+  datasource:
+    mapperLocations: classpath:/cn/ktwo/databasedemo/mapper/*.xml
+    configLocation: classpath:/mybatis-config.xml
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    druid:
+      master:  #数据源1
+        url: jdbc:mysql://192.168.1.61:3306/fms?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+        username: fms
+        password: fms
+      slave:  #数据源2
+        url: jdbc:mysql://192.168.1.62:3306/fms?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+        username: fms
+        password: fms
+      initial-size: 10
+      max-active: 100
+      min-idle: 10
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        #login-username: admin
+        #login-password: admin
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+  messages:
+    encoding: UTF-8
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+
+
+
+
+druid:
+  init:
+    prefix: /druid/*
+    allow:
+    deny: 192.168.1.101
+    loginUsername: root
+    loginPassword: 123123
+    resetEnable: false
